@@ -1,0 +1,4 @@
+Flask==2.3.2
+requests==2.31.0
+undetected-chromedriver==3.5.5
+fp.fp==0.2.2

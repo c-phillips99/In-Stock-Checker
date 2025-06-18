@@ -1,0 +1,16 @@
+{% for url, data in stock.items() %}
+<tr class="{% if data.expired %}out-of-stock{% else %}updated{% endif %}">
+    <td>{{ data.domain.capitalize() }}</td>
+    <td>{{ data.type }}</td>
+    <td class="{{ 'status-out' if data.expired else 'status-in' }}">{{ data.price }}</td>
+    <td><a href="{{ url }}" target="_blank">View</a></td>
+    <td>{{ data.timestamp | timestamp_to_str }}</td>
+    <td class="expires-in" data-timestamp="{{ data.timestamp }}">{{ data.timestamp | time_remaining }}</td>
+    <td><button class="btn-trash" data-url="{{ url }}" title="Mark as out of stock">🗑️</button></td>
+
+</tr>
+{% endfor %}
+
+{% if stock|length == 0 %}
+    <tr><td colspan="5">No tracked items yet.</td></tr>
+{% endif %}

@@ -1,0 +1,173 @@
+/* ============================
+   🧱 BASE STYLES
+============================ */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 40px;
+    color: #333;
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 24px;
+}
+
+.container {
+    max-width: 960px;
+    margin: auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+/* ============================
+   📊 TABLE STYLES
+============================ */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    padding: 12px 16px;
+    text-align: left;
+}
+
+th {
+    background-color: #f7f9fc;
+    font-weight: 600;
+    color: #444;
+}
+
+tr {
+    border-bottom: 1px solid #eee;
+}
+
+tr:hover {
+    background-color: #f5f8ff;
+}
+
+td a {
+    color: #1a73e8;
+    text-decoration: none;
+}
+
+tr.out-of-stock {
+    opacity: 0.5;
+    color: gray;
+}
+
+tr.updated {
+    animation: flash 1s ease-in-out;
+}
+
+/* ============================
+   📦 STATUS STYLES
+============================ */
+.status-in {
+    font-weight: 600;
+    color: #27ae60;
+}
+
+.status-out {
+    font-weight: 600;
+    color: #c0392b;
+    opacity: 0.6;
+}
+
+.status-bar {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    gap: 4px;
+    font-size: 14px;
+    color: #666;
+}
+
+#next-check-timer.red {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+#next-check-timer.green {
+    color: #2ecc71;
+    font-weight: 600;
+}
+
+/* ============================
+   🧼 BUTTONS
+============================ */
+.btn {
+    padding: 10px 16px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s ease;
+}
+
+.btn:hover {
+    background: #c0392b;
+}
+
+.btn-trash {
+    background: #e74c3c;
+    border: none;
+    color: white;
+    font-size: 16px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn-trash:hover {
+    background: #c0392b;
+}
+
+/* ============================
+   🔔 TOAST MESSAGE
+============================ */
+#toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #333;
+    color: white;
+    padding: 14px 22px;
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 9999;
+    font-size: 15px;
+}
+
+#toast.show {
+    opacity: 1;
+}
+
+/* ============================
+   💫 ANIMATIONS
+============================ */
+@keyframes flash {
+    0%   { background-color: #fff7cc; }
+    100% { background-color: transparent; }
+}
+
+/* ============================
+   📐 LAYOUT HELPERS
+============================ */
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}

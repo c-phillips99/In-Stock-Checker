@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Config Editor</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    label {
+      font-weight: 600;
+      margin-top: 12px;
+      display: block;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      font-family: 'Inter', sans-serif;
+      margin-bottom: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    textarea {
+      font-family: monospace;
+      height: 200px;
+    }
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>⚙️ Admin Config Panel</h1>
+
+  <form id="config-form">
+    <label>Check Interval (seconds)</label>
+    <input type="number" name="check_interval">
+
+    <label>Alert Interval (seconds)</label>
+    <input type="number" name="alert_interval">
+
+    <label>Use Proxies</label>
+    <input type="checkbox" name="use_proxies">
+
+    <label>Discord Webhook URL</label>
+    <input type="text" name="discord_webhook_url">
+
+    <label>Discord User ID</label>
+    <input type="text" name="discord_user_id">
+
+    <label>Cooldowns (JSON)</label>
+    <textarea name="cooldowns"></textarea>
+
+    <label>URLs (JSON)</label>
+    <textarea name="urls"></textarea>
+
+    <div class="btn-group">
+      <button type="submit" class="btn" style="background:#27ae60">💾 Save</button>
+      <a href="/" class="btn" style="background:#3498db">🏠 Back</a>
+    </div>
+  </form>
+
+  <div id="toast"></div>
+</div>
+
+<script>
+  const form = document.getElementById("config-form");
+
+  function showToast(msg) {
+    const toast = document.getElementById("toast");
+    toast.textContent = msg;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 3000);
+  }
+
+  async function loadConfig() {
+    const res = await fetch("/api/admin/config");
+    const config = await res.json();
+
+    form.check_interval.value = config.check_interval;
+    form.alert_interval.value = config.alert_interval;
+    form.use_proxies.checked = config.use_proxies;
+    form.discord_webhook_url.value = config.discord_webhook_url;
+    form.discord_user_id.value = config.discord_user_id;
+    form.cooldowns.value = JSON.stringify(config.cooldowns, null, 2);
+    form.urls.value = JSON.stringify(config.urls, null, 2);
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    try {
+      const config = {
+        check_interval: Number(form.check_interval.value),
+        alert_interval: Number(form.alert_interval.value),
+        use_proxies: form.use_proxies.checked,
+        discord_webhook_url: form.discord_webhook_url.value,
+        discord_user_id: form.discord_user_id.value,
+        cooldowns: JSON.parse(form.cooldowns.value),
+        urls: JSON.parse(form.urls.value)
+      };
+
+      await fetch("/api/admin/config", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(config, null, 2)
+      });
+
+      showToast("✅ Config saved");
+    } catch (err) {
+      showToast("❌ Error saving config (check JSON formatting)");
+    }
+  });
+
+  loadConfig();
+</script>
+</body>
+</html>

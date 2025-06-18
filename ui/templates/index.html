@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stock Monitor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body data-next-check="{{ next_check }}">
+    <div class="container">
+        <div class="header-row">
+            <h1>🟢 Nintendo Switch 2 Stock Tracker</h1>
+            <div class="status-bar">
+                <div><strong>Last Checked:</strong> {{ last_check | timestamp_to_str }}</div>
+                <div><strong>Next Check:</strong> <span id="next-check-timer">...</span></div>
+            </div>
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <form id="force-check-form">
+                <button type="submit" class="btn" style="background:#27ae60">🔁 Force Check</button>
+            </form>
+            <form action="/clear-cache" method="get" onsubmit="return confirm('Clear all stock data?');">
+                <button type="submit" class="btn" style="background:#e74c3c">🗑️ Clear Cache</button>
+            </form>
+            <form action="/admin" method="get">
+                <button type="submit" class="btn" style="background:#3498db">⚙️ Admin</button>
+            </form>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Store</th>
+                    <th>Type</th>
+                    <th>Price</th>
+                    <th>Link</th>
+                    <th>Checked At</th>
+                    <th>Expires In</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="stock-table-body">
+                {% include "stock_table.html" %}
+            </tbody>
+        </table>
+    </div>
+
+    <div id="toast"></div>
+    <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

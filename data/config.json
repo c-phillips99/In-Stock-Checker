@@ -1,0 +1,16 @@
+{
+  "discord_webhook_url": "YOUR_DISCORD_WEBHOOK_URL",
+  "discord_user_id": "YOUR_DISCORD_USER_ID",
+  "use_proxies": false,
+  "alert_interval": 3600,
+  "check_interval": 900,
+  "cooldowns": {
+    "example": 1800
+  },
+  "urls": {
+    "example": [
+      "https://www.example.com/product-1",
+      "https://www.example.com/product-2"
+    ]
+  }
+}
